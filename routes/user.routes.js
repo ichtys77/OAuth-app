@@ -5,28 +5,28 @@ router.get('/no-permission', (req, res) => {
   res.render('noPermission');
 });
 
-router.get('/logged', (req, res) => {
-  if(req.user) {
-    res.render('logged', {name: req.user.displayName , avatar: req.user._json.picture});
-  } else {
-    res.redirect('../user/no-permission');
-  }
-});
-
-router.get('/profile', (req, res) => {
-  if(req.user) {
-    res.render('profile');
-  } else {
-    res.redirect('../user/no-permission');
-  }
-});
-
-router.get('/profile/settings', (req, res) => {
-  if(req.user) {
-    res.render('settings');
-  } else {
+const isLogged = (req, res, next) => {
+  if (!req.user) {
     res.redirect('/user/no-permission');
+  } else {
+    next();
   }
+};
+
+router.get('/logged', isLogged, (req, res) => {
+  res.render('logged', { name: req.user.displayName, avatar: req.user.photos[0].value });
 });
 
-module.exports = router; 
+router.get('/no-permission', (req, res) => {
+  res.render('noPermission');
+});
+
+router.get('/profile', isLogged, (req, res) => {
+  res.render('profile');
+});
+
+router.get('/profile/settings', isLogged, (req, res) => {
+  res.render('settings');
+});
+
+module.exports = router;

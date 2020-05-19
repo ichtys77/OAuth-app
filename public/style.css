@@ -154,7 +154,7 @@ button {
 
 .logoutBtn {
   display: block;
-  background-color: #ff5d6c;
+
   width: 250px;
   box-sizing: border-box;
   position: relative;
@@ -165,9 +165,7 @@ button {
   border-radius: 0.2em;
   font-size: 16px;
   color: #FFF;
-  text-transform: uppercase;
   cursor: pointer;
-  text-decoration: none;
 }
 
 .avatar {
